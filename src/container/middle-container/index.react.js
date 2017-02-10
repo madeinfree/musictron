@@ -127,6 +127,7 @@ class MiddleContainer extends Component {
     this.player = new YT.Player('player', {
       height: '200',
       width: '200',
+      playerVars: { 'autoplay': 1, 'controls': 0 },
       videoId: play.videoId || 'svHObS_TcgM',
       events: {
         'onReady': this.onPlayerReady.bind(this),
@@ -202,7 +203,7 @@ class MiddleContainer extends Component {
             <div
               style={ middleFollowBtn }
             >
-              關注
+              加入最愛
             </div>
             <div
               style={ middleSettingBtn }
