@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import {
+  startMusic
+} from '../../action/playAction'
 
 const middleHr = {
   display: 'block',
@@ -80,10 +83,58 @@ const middleListBodyRow = {
 }
 
 class MiddleContainer extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.player = null
+  }
+
+  componentDidMount() {
+    const {
+      play
+    } = this.props
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    window.onYouTubeIframeAPIReady = this.onReady.bind(this)
+  }
+
+  componentDidUpdate() {
+    const {
+      play
+    } = this.props
+    if (this.player && this.player.loadVideoById) {
+      this.player.loadVideoById(play.videoId, 0, "large")
+    }
+  }
+
+  onReady() {
+    const {
+      play
+    } = this.props
+    this.player = new YT.Player('player', {
+      height: '200',
+      width: '200',
+      videoId: play.videoId || 'svHObS_TcgM',
+      events: {
+        'onReady': this.onPlayerReady.bind(this)
+      }
+    });
+  }
+
+  onPlayerReady() {
+    this.player.playVideo()
+  }
+
   render() {
 
     const {
-      lists
+      lists,
+      startMusic
     } = this.props
 
     return (
@@ -92,9 +143,7 @@ class MiddleContainer extends Component {
       >
         <div
           style={ middleCover }>
-          <div>
-            <img src='https://placeholdit.imgix.net/~text?txtsize=19&txt=200%C3%97200&w=200&h=200' />
-          </div>
+          <div id="player"></div>
           <div
             style={ middleCoverSongText }
           >歌曲</div>
@@ -132,22 +181,31 @@ class MiddleContainer extends Component {
             <div style={ { flex: 4 } }>歌曲</div>
             <div style={ { flex: 2 } }>藝人</div>
             <div style={ { flex: 2 } }>日期</div>
-            <div style={ { flex: 1, textAlign: 'center' } }>選項</div>
           </div>
           <div>
             {
               lists.map((list, idx) => {
+                const {
+                  title,
+                  description,
+                  publishedAt
+                } = list.snippet
+                const {
+                  videoId
+                } = list.id
                 return (
                   <div
-                    key={ `${list.title}-idx` }
+                    key={ `${title}-idx` }
                     style={ middleListBodyRow }
                   >
-                    <div style={ { flex: 1, textAlign: 'center', cursor: 'default' } }>{ list.started ? '(||)' : '' }</div>
+                    <div
+                      style={ { flex: 1, textAlign: 'center', cursor: 'default' } }
+                      onClick={ () => startMusic(videoId) }
+                    >播放</div>
                     <div style={ { flex: 1, textAlign: 'center', cursor: 'default' } }>+</div>
-                    <div style={ { flex: 4 } }>{ list.title }</div>
-                    <div style={ { flex: 2 } }>{ list.singer }</div>
-                    <div style={ { flex: 2 } }>{ list.date.toDateString() }</div>
-                    <div style={ { flex: 1, textAlign: 'center', cursor: 'default' } }>⋯⋯</div>
+                    <div style={ { flex: 4 } }>{ title }</div>
+                    <div style={ { flex: 2 } }>MJ116</div>
+                    <div style={ { flex: 2 } }>{ publishedAt }</div>
                   </div>
                 )
               })
@@ -162,10 +220,13 @@ class MiddleContainer extends Component {
 // export default MiddleContainer
 const mapStateToProps = (state) => {
   return {
-    lists: state.lists
+    lists: state.lists,
+    play: state.play
   }
 }
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  startMusic
+}
 export default connect(
   mapStateToProps,
   mapDispatchToProps

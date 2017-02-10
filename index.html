@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <title>Hello Electron</title>
     <style>
+    ::selection {
+      background:transparent;
+    }
     body {
       padding: 0px;
       margin: 0px;
@@ -13,6 +16,7 @@
   </head>
   <body>
     <div id='electron-view'></div>
+    <script src="https://apis.google.com/js/api.js"></script>
     <script src='./build/bundle.js'></script>
   </body>
 </html>

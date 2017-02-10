@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
 
+import { connect } from 'react-redux'
+import {
+  searchMusicLists
+} from '../../action/listAction'
+
 const titleBarMain = {
   padding: 10,
   justifyContent: 'space-between',
@@ -30,26 +35,28 @@ const titleBarUpgradeBtn = {
 
 class TitleBar extends Component {
   render() {
+    this.props.searchMusicLists()
     return (
       <div
         style={ titleBarMain }
       >
-        <div style={ { flex: 1 } }>{ '<' }</div>
-        <div style={ { flex: 1 } }>{ '>' }</div>
         <div
           style={ titleBarSearchAndUpgrade }
         >
           <div>
             <input style={ titleBarUpgradeInput } placeholder='搜尋' type='text' />
           </div>
-          <div style={ Object.assign({ marginRight: 10 }, titleBarUpgradeBtn) }>upgrade</div>
         </div>
-        <div style={ { flex: 1 } }>1</div>
-        <div style={ { flex: 1 } }>2</div>
-        <div style={ { flex: 1 } }>3</div>
       </div>
     )
   }
 }
 
-export default TitleBar
+const mapDispatchToProps = {
+  searchMusicLists
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(TitleBar)

@@ -12,7 +12,6 @@ class RightContainer extends Component {
       <div
         style={ rightMain }
       >
-        Right
       </div>
     )
   }
