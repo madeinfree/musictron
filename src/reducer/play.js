@@ -1,11 +1,20 @@
 const initialState = {
-  videoId: ''
+  videoId: '',
+  detail: {
+    title: '',
+    description: ''
+  }
 }
 
 const play = (state = initialState, action) => {
   switch(action.type) {
     case 'STARTMUSIC':
-      return Object.assign({}, state, { videoId: action.payload.videoId })
+      const {
+        videoId,
+        title,
+        description
+      } = action.payload
+      return Object.assign({}, state, { videoId, title, description })
     default:
       return state
   }

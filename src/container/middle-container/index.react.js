@@ -134,6 +134,7 @@ class MiddleContainer extends Component {
 
     const {
       lists,
+      play,
       startMusic
     } = this.props
 
@@ -146,7 +147,10 @@ class MiddleContainer extends Component {
           <div id="player"></div>
           <div
             style={ middleCoverSongText }
-          >歌曲</div>
+          >
+            <div style={ { fontSize: 14 } }>{ play.title }</div>
+            <div style={ { fontSize: 20, marginTop: 20 } }>{ play.description }</div>
+          </div>
         </div>
         <div>
           <div
@@ -200,7 +204,7 @@ class MiddleContainer extends Component {
                   >
                     <div
                       style={ { flex: 1, textAlign: 'center', cursor: 'default' } }
-                      onClick={ () => startMusic(videoId) }
+                      onClick={ () => startMusic(videoId, { title, description }) }
                     >播放</div>
                     <div style={ { flex: 1, textAlign: 'center', cursor: 'default' } }>+</div>
                     <div style={ { flex: 4 } }>{ title }</div>

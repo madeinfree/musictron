@@ -1,8 +1,10 @@
-const startMusic = (videoId) => {
+const startMusic = (videoId, { title, description }) => {
   return {
     type: 'STARTMUSIC',
     payload: {
-      videoId
+      videoId,
+      title,
+      description
     }
   }
 }
