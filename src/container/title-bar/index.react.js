@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import {
   searchMusicLists
 } from '../../action/listAction'
+import {
+  cacheTitle
+} from '../../action/historAction'
 
 const titleBarMain = {
   padding: 10,
@@ -34,6 +37,24 @@ const titleBarUpgradeBtn = {
 }
 
 class TitleBar extends Component {
+
+  searchMusic(e) {
+    const {
+      searchMusicLists,
+      cacheTitle
+    } = this.props
+    if (e.keyCode === 13) {
+      const query = e.target.value
+      searchMusicLists({
+        q: query
+      })
+      cacheTitle({
+        title: query
+      })
+      e.target.value = ''
+    }
+  }
+
   render() {
     this.props.searchMusicLists()
     return (
@@ -44,7 +65,12 @@ class TitleBar extends Component {
           style={ titleBarSearchAndUpgrade }
         >
           <div>
-            <input style={ titleBarUpgradeInput } placeholder='搜尋' type='text' />
+            <input
+              style={ titleBarUpgradeInput }
+              placeholder='搜尋'
+              type='text'
+              onKeyDown={ this.searchMusic.bind(this) }
+            />
           </div>
         </div>
       </div>
@@ -53,7 +79,8 @@ class TitleBar extends Component {
 }
 
 const mapDispatchToProps = {
-  searchMusicLists
+  searchMusicLists,
+  cacheTitle
 }
 
 export default connect(

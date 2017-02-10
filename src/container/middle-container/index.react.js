@@ -88,6 +88,7 @@ class MiddleContainer extends Component {
     super(props);
 
     this.player = null
+    this.lastVideoId = ''
   }
 
   componentDidMount() {
@@ -105,8 +106,13 @@ class MiddleContainer extends Component {
 
   componentDidUpdate() {
     const {
+      lists,
       play
     } = this.props
+    
+    if (this.lastVideoId === play.videoId) return
+
+    this.lastVideoId = play.videoId
     if (this.player && this.player.loadVideoById) {
       this.player.loadVideoById(play.videoId, 0, "large")
     }
@@ -205,7 +211,7 @@ class MiddleContainer extends Component {
                     <div
                       style={ { flex: 1, textAlign: 'center', cursor: 'default' } }
                       onClick={ () => startMusic(videoId, { title, description }) }
-                    >播放</div>
+                    >{ videoId === play.videoId ? '播放中' : '播放' }</div>
                     <div style={ { flex: 1, textAlign: 'center', cursor: 'default' } }>+</div>
                     <div style={ { flex: 4 } }>{ title }</div>
                     <div style={ { flex: 2 } }>MJ116</div>

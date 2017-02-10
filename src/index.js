@@ -5,6 +5,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { lists } from './reducer/list'
 import { play } from './reducer/play'
+import { history } from './reducer/history'
 import thunk from 'redux-thunk';
 
 import APIWrapper from './container/gapi-container/index.react'
@@ -16,7 +17,8 @@ import RightContainer from './container/right-container/index.react'
 const store = createStore(
   combineReducers({
     lists,
-    play
+    play,
+    history
   })
 , applyMiddleware(thunk))
 
