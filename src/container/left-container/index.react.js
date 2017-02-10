@@ -6,8 +6,7 @@ const leftMain = {
   padding: 10
 }
 const leftTitleStyle = {
-  marginTop: 40,
-  fontSize: 12
+  fontSize: 14
 }
 
 class LeftContainer extends Component {
@@ -17,7 +16,7 @@ class LeftContainer extends Component {
         style={ leftMain }
       >
         <div>
-          <div style={ leftTitleStyle }>加入儲存的音樂</div>
+          <div style={ leftTitleStyle }>儲存的音樂</div>
         </div>
       </div>
     )

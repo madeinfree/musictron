@@ -9,6 +9,7 @@ const searchMusicLists = (params = { q: 'MJ116' }) => {
           path: '/youtube/v3/search',
           params: {
             part: 'snippet',
+            type: 'music',
             q: params.q
           }
         })

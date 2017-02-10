@@ -9,6 +9,20 @@ const startMusic = (videoId, { title, description }) => {
   }
 }
 
+const stopMusic = () => {
+  return {
+    type: 'STOP_MUSIC'
+  }
+}
+
+const restartMusic = () => {
+  return {
+    type: 'RESTART_MUSIC'
+  }
+}
+
 export {
-  startMusic
+  startMusic,
+  stopMusic,
+  restartMusic
 }

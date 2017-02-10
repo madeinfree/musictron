@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
-  startMusic
+  startMusic,
+  stopMusic,
+  restartMusic
 } from '../../action/playAction'
 
 const middleHr = {
@@ -109,7 +111,7 @@ class MiddleContainer extends Component {
       lists,
       play
     } = this.props
-    
+
     if (this.lastVideoId === play.videoId) return
 
     this.lastVideoId = play.videoId
@@ -127,13 +129,42 @@ class MiddleContainer extends Component {
       width: '200',
       videoId: play.videoId || 'svHObS_TcgM',
       events: {
-        'onReady': this.onPlayerReady.bind(this)
+        'onReady': this.onPlayerReady.bind(this),
+        'onStateChange': this.onStateChange.bind(this)
       }
     });
   }
 
   onPlayerReady() {
+    const {
+      play
+    } = this.props
+    if (play.isPlayed) {
+      this.player.playVideo()
+    }
+  }
+
+  onStateChange(e) {
+    const status = e.data
+    if (status === 0) {
+      this.onPlayerReady()
+    }
+  }
+
+  onPlayMusic() {
+    const {
+      restartMusic
+    } = this.props
     this.player.playVideo()
+    restartMusic()
+  }
+
+  onStopMusic() {
+    const {
+      stopMusic
+    } = this.props
+    this.player.pauseVideo()
+    stopMusic()
   }
 
   render() {
@@ -154,8 +185,8 @@ class MiddleContainer extends Component {
           <div
             style={ middleCoverSongText }
           >
-            <div style={ { fontSize: 14 } }>{ play.title }</div>
-            <div style={ { fontSize: 20, marginTop: 20 } }>{ play.description }</div>
+            <div style={ { fontSize: 14 } }>{ play.detail.title }</div>
+            <div style={ { fontSize: 20, marginTop: 20 } }>{ play.detail.description }</div>
           </div>
         </div>
         <div>
@@ -164,8 +195,9 @@ class MiddleContainer extends Component {
           >
             <div
               style={ middleStartBtn }
+              onClick={ play.isPlayed ? this.onStopMusic.bind(this) : this.onPlayMusic.bind(this) }
             >
-              播放
+              { play.isPlayed ? '暫停' : '播放' }
             </div>
             <div
               style={ middleFollowBtn }
@@ -188,9 +220,8 @@ class MiddleContainer extends Component {
           >
             <div style={ { flex: 1, textAlign: 'center' } }></div>
             <div style={ { flex: 1, textAlign: 'center' } }></div>
-            <div style={ { flex: 4 } }>歌曲</div>
-            <div style={ { flex: 2 } }>藝人</div>
-            <div style={ { flex: 2 } }>日期</div>
+            <div style={ { flex: 4 } }></div>
+            <div style={ { flex: 2 } }></div>
           </div>
           <div>
             {
@@ -198,7 +229,8 @@ class MiddleContainer extends Component {
                 const {
                   title,
                   description,
-                  publishedAt
+                  publishedAt,
+                  thumbnails
                 } = list.snippet
                 const {
                   videoId
@@ -208,13 +240,14 @@ class MiddleContainer extends Component {
                     key={ `${title}-idx` }
                     style={ middleListBodyRow }
                   >
+                    <div style={ { flex: 1, textAlign: 'center', cursor: 'pointer' } } onClick={ () => startMusic(videoId, { title, description }) }>
+                      <img width='100%' src={ thumbnails.default.url} />
+                    </div>
                     <div
                       style={ { flex: 1, textAlign: 'center', cursor: 'default' } }
                       onClick={ () => startMusic(videoId, { title, description }) }
                     >{ videoId === play.videoId ? '播放中' : '播放' }</div>
-                    <div style={ { flex: 1, textAlign: 'center', cursor: 'default' } }>+</div>
                     <div style={ { flex: 4 } }>{ title }</div>
-                    <div style={ { flex: 2 } }>MJ116</div>
                     <div style={ { flex: 2 } }>{ publishedAt }</div>
                   </div>
                 )
@@ -235,7 +268,9 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = {
-  startMusic
+  startMusic,
+  stopMusic,
+  restartMusic
 }
 export default connect(
   mapStateToProps,
