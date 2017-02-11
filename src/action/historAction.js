@@ -34,6 +34,19 @@ const clearCacheTitle = ({ db }) => {
   }
 }
 
+const getFavoriteCacheTitle = ({ db }) => {
+  return (dispatch) => {
+    db.getDBFavoriteItems(({ items }) => {
+      dispatch({
+        type: 'CHECKOUT_FAVORITE_FROM_DB',
+        payload: {
+          items
+        }
+      })
+    })
+  }
+}
+
 const addFavoriteVideoId = ({ title, description, videoId }) => {
   return {
     type: 'ADD_FAVORITE_VIDEO_ID',
@@ -49,5 +62,7 @@ export {
   getHistoryCacheTitle,
   cacheTitle,
   clearCacheTitle,
+
+  getFavoriteCacheTitle,
   addFavoriteVideoId
 }

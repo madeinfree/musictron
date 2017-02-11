@@ -17,6 +17,10 @@ const history = (state = initialState, action) => {
       return Object.assign({}, state, {
         videoTitles: []
       })
+    case 'CHECKOUT_FAVORITE_FROM_DB':
+      return Object.assign({}, state, {
+        favoriteVideoIds: action.payload.items
+      })
     case 'ADD_FAVORITE_VIDEO_ID':
       return Object.assign({}, state, {
         favoriteVideoIds: state.favoriteVideoIds.concat({

@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import {
   startMusic
 } from '../../action/playAction'
+import {
+  getFavoriteCacheTitle
+} from '../../action/historAction'
 
 const leftMain = {
   float: 'left',
@@ -17,6 +20,13 @@ const favoriteBtnStyle = {
 }
 
 class LeftContainer extends Component {
+  componentDidMount() {
+    const {
+      getFavoriteCacheTitle,
+      db
+    } = this.props
+    getFavoriteCacheTitle({ db })
+  }
   render() {
     const {
       favoriteVideoIds,
@@ -63,7 +73,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  startMusic
+  startMusic,
+  getFavoriteCacheTitle
 }
 
 export default connect(

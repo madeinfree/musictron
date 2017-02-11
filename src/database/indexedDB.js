@@ -48,6 +48,17 @@ class IndexedDB {
     })
   }
 
+  getDBFavoriteItems(cb) {
+    const db = this._getDB()
+    const transaction = db.transaction('favoriteCache', 'readonly').objectStore('favoriteCache')
+    const items = transaction.getAll()
+    items.onsuccess = (ev) => {
+      cb({
+        items: ev.target.result
+      })
+    }
+  }
+
   getDBItems(cb) {
     const db = this._getDB()
     const transaction = db.transaction('searchCache', 'readonly').objectStore('searchCache')
