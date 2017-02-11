@@ -1,3 +1,6 @@
+import idb from './database/indexedDB'
+const db = new idb
+
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 
@@ -29,12 +32,16 @@ class Main extends Component {
       <div>
         <APIWrapper>
           <div>
-            <TitleBar />
+            <TitleBar
+              db={ db }
+            />
           </div>
           <div>
             <LeftContainer />
             <MiddleContainer />
-            <RightContainer />
+            <RightContainer
+              db={ db }
+            />
           </div>
         </APIWrapper>
       </div>
@@ -42,8 +49,10 @@ class Main extends Component {
   }
 }
 
-render(
-  <Provider store={ store }>
-    <Main />
-  </Provider>
-, document.getElementById('electron-view'))
+db.initializeDB(() => {
+  render(
+    <Provider store={ store }>
+      <Main />
+    </Provider>
+  , document.getElementById('electron-view'))
+})

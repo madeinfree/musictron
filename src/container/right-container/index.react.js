@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import {
   searchMusicLists
 } from '../../action/listAction'
+import {
+  getHistoryCacheTitle
+} from '../../action/historAction'
 
 const rightMain = {
   float: 'left',
@@ -11,6 +14,13 @@ const rightMain = {
 }
 
 class RightContainer extends Component {
+  componentDidMount() {
+    const {
+      getHistoryCacheTitle,
+      db
+    } = this.props
+    getHistoryCacheTitle({ db })
+  }
   render() {
     const {
       history,
@@ -25,14 +35,15 @@ class RightContainer extends Component {
           history.videoTitles.map((title, idx) => {
             return (
               <div
-                key={ `${title}-${idx}-${new Date().getTime()}` }
-                onClick={ () => searchMusicLists({ q: title }) }
+                key={ `${title.title}-${idx}-${new Date().getTime()}` }
+                onClick={ () => searchMusicLists({ q: title.title }) }
               >
-                { title }
+                { title.title }
               </div>
             )
           })
         }
+        清除歷史紀錄
       </div>
     )
   }
@@ -44,6 +55,7 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = {
+  getHistoryCacheTitle,
   searchMusicLists
 }
 

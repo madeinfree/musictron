@@ -41,7 +41,8 @@ class TitleBar extends Component {
   searchMusic(e) {
     const {
       searchMusicLists,
-      cacheTitle
+      cacheTitle,
+      db
     } = this.props
     if (e.keyCode === 13) {
       const query = e.target.value
@@ -49,7 +50,8 @@ class TitleBar extends Component {
         q: query
       })
       cacheTitle({
-        title: query
+        title: query,
+        db
       })
       e.target.value = ''
     }

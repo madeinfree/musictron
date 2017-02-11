@@ -128,7 +128,7 @@ class MiddleContainer extends Component {
       height: '200',
       width: '200',
       playerVars: { 'autoplay': 1, 'controls': 0 },
-      videoId: play.videoId || 'svHObS_TcgM',
+      videoId: play.videoId || 'uG3BGIq3-Cc',
       events: {
         'onReady': this.onPlayerReady.bind(this),
         'onStateChange': this.onStateChange.bind(this)
@@ -175,7 +175,6 @@ class MiddleContainer extends Component {
       play,
       startMusic
     } = this.props
-
     return (
       <div
         style={ middleMain }
@@ -234,8 +233,11 @@ class MiddleContainer extends Component {
                   thumbnails
                 } = list.snippet
                 const {
-                  videoId
+                  videoId,
+                  playlistId
                 } = list.id
+                // null elem when videoId is undefined
+                if (!videoId) return
                 return (
                   <div
                     key={ `${title}-idx` }
@@ -246,7 +248,7 @@ class MiddleContainer extends Component {
                     </div>
                     <div
                       style={ { flex: 1, textAlign: 'center', cursor: 'default' } }
-                      onClick={ () => startMusic(videoId, { title, description }) }
+                      onClick={ () => startMusic(videoId || playlistId, { title, description }) }
                     >{ videoId === play.videoId ? '播放中' : '播放' }</div>
                     <div style={ { flex: 4 } }>{ title }</div>
                     <div style={ { flex: 2 } }>{ publishedAt }</div>
