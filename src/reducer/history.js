@@ -12,6 +12,10 @@ const history = (state = initialState, action) => {
       return Object.assign({}, state, {
         videoTitles: state.videoTitles.concat(action.payload.title)
       })
+    case 'CLEAR_CATCH_VIDEO_TITLE':
+      return Object.assign({}, state, {
+        videoTitles: []
+      })
     default:
       return state
   }

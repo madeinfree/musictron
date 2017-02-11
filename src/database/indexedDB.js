@@ -37,10 +37,6 @@ class IndexedDB {
     })
   }
 
-  onDBError(ev) {
-    throw new Error(ev)
-  }
-
   getDBItems(cb) {
     const db = this._getDB()
     const transaction = db.transaction('searchCache', 'readonly').objectStore('searchCache')
@@ -52,8 +48,18 @@ class IndexedDB {
     }
   }
 
+  clearDBItems(cb) {
+    const db = this._getDB()
+    const transaction = db.transaction('searchCache', 'readwrite').objectStore('searchCache')
+    transaction.clear()
+    cb()
+  }
+
+  onDBError(ev) {
+    throw new Error(ev)
+  }
+
   _getDB() {
-    console.log(this)
     return this.db
   }
 }

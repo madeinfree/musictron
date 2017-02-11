@@ -24,7 +24,18 @@ const cacheTitle = ({ title, db }) => {
   }
 }
 
+const clearCacheTitle = ({ db }) => {
+  return (dispatch) => {
+    db.clearDBItems(() => {
+      dispatch({
+        type: 'CLEAR_CATCH_VIDEO_TITLE'
+      })
+    })
+  }
+}
+
 export {
   getHistoryCacheTitle,
-  cacheTitle
+  cacheTitle,
+  clearCacheTitle
 }

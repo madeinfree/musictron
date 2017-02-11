@@ -4,13 +4,18 @@ import {
   searchMusicLists
 } from '../../action/listAction'
 import {
-  getHistoryCacheTitle
+  getHistoryCacheTitle,
+  clearCacheTitle
 } from '../../action/historAction'
 
 const rightMain = {
   float: 'left',
   width: '10%',
   padding: 10
+}
+
+const clearCacheBtnStyle = {
+  cursor: 'default'
 }
 
 class RightContainer extends Component {
@@ -24,7 +29,8 @@ class RightContainer extends Component {
   render() {
     const {
       history,
-      searchMusicLists
+      searchMusicLists,
+      db
     } = this.props
     return (
       <div
@@ -43,7 +49,10 @@ class RightContainer extends Component {
             )
           })
         }
-        清除歷史紀錄
+        <div
+          style={ clearCacheBtnStyle }
+          onClick={ () => this.props.clearCacheTitle({ db }) }
+        >清除歷史紀錄</div>
       </div>
     )
   }
@@ -56,7 +65,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = {
   getHistoryCacheTitle,
-  searchMusicLists
+  searchMusicLists,
+  clearCacheTitle
 }
 
 export default connect(
