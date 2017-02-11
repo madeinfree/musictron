@@ -5,6 +5,9 @@ import {
   stopMusic,
   restartMusic
 } from '../../action/playAction'
+import {
+  addFavoriteVideoId
+} from '../../action/historAction'
 
 const middleHr = {
   display: 'block',
@@ -55,19 +58,6 @@ const middleFollowBtn = {
   width: 130,
   height: 36,
   borderRadius: 18
-}
-const middleSettingBtn = {
-  marginLeft: 10,
-  marginTop: 10,
-  color: '#000',
-  fontSize: 12,
-  border: '1px solid #000',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: 40,
-  height: 36,
-  borderRadius: 150
 }
 
 // list
@@ -168,6 +158,25 @@ class MiddleContainer extends Component {
     stopMusic()
   }
 
+  onAddFavoriteVideoId() {
+    const {
+      play,
+      db
+    } = this.props
+    const {
+      addFavoriteVideoId
+    } = this.props
+
+    if (play.detail.title && play.videoId) {
+      db.onSetFavoriteIntoDB(play.videoId, play.detail.title, play.detail.description)
+      addFavoriteVideoId({
+        title: play.detail.title,
+        description: play.detail.description,
+        videoId: play.videoId
+      })
+    }
+  }
+
   render() {
 
     const {
@@ -200,14 +209,10 @@ class MiddleContainer extends Component {
               { play.isPlayed ? '暫停' : '播放' }
             </div>
             <div
+              onClick={ this.onAddFavoriteVideoId.bind(this) }
               style={ middleFollowBtn }
             >
               加入最愛
-            </div>
-            <div
-              style={ middleSettingBtn }
-            >
-              ⋯⋯
             </div>
           </div>
         </div>
@@ -273,7 +278,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   startMusic,
   stopMusic,
-  restartMusic
+  restartMusic,
+  addFavoriteVideoId
 }
 export default connect(
   mapStateToProps,

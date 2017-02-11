@@ -38,7 +38,9 @@ class Main extends Component {
           </div>
           <div>
             <LeftContainer />
-            <MiddleContainer />
+            <MiddleContainer
+              db={ db }
+            />
             <RightContainer
               db={ db }
             />

@@ -1,5 +1,6 @@
 const initialState = {
-  videoTitles: []
+  videoTitles: [],
+  favoriteVideoIds: []
 }
 
 const history = (state = initialState, action) => {
@@ -15,6 +16,13 @@ const history = (state = initialState, action) => {
     case 'CLEAR_CATCH_VIDEO_TITLE':
       return Object.assign({}, state, {
         videoTitles: []
+      })
+    case 'ADD_FAVORITE_VIDEO_ID':
+      return Object.assign({}, state, {
+        favoriteVideoIds: state.favoriteVideoIds.concat({
+          title: action.payload.title,
+          videoId: action.payload.videoId
+        })
       })
     default:
       return state

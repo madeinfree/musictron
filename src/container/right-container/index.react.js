@@ -14,6 +14,10 @@ const rightMain = {
   padding: 10
 }
 
+const historyBtnStyle = {
+  cursor: 'default'
+}
+
 const clearCacheBtnStyle = {
   cursor: 'default'
 }
@@ -41,6 +45,7 @@ class RightContainer extends Component {
           history.videoTitles.map((title, idx) => {
             return (
               <div
+                style={ historyBtnStyle }
                 key={ `${title.title}-${idx}-${new Date().getTime()}` }
                 onClick={ () => searchMusicLists({ q: title.title }) }
               >

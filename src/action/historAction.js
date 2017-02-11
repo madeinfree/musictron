@@ -34,8 +34,20 @@ const clearCacheTitle = ({ db }) => {
   }
 }
 
+const addFavoriteVideoId = ({ title, description, videoId }) => {
+  return {
+    type: 'ADD_FAVORITE_VIDEO_ID',
+    payload: {
+      title,
+      description,
+      videoId
+    }
+  }
+}
+
 export {
   getHistoryCacheTitle,
   cacheTitle,
-  clearCacheTitle
+  clearCacheTitle,
+  addFavoriteVideoId
 }

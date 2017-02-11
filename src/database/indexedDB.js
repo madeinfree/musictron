@@ -1,7 +1,7 @@
 class IndexedDB {
   constructor() {
     this.db = null
-    this.DBOpenRequest = window.indexedDB.open('searchCache', 1)
+    this.DBOpenRequest = window.indexedDB.open('searchCache', 2)
     this.initCallback = null
   }
 
@@ -22,8 +22,9 @@ class IndexedDB {
 
     db.onerror = this.onDBError
     let objectStore = db.createObjectStore('searchCache', { keyPath: 'title' })
+    let objectFavoriteStore = db.createObjectStore('favoriteCache', { keyPath: 'title' })
 
-    console.log(`database ${objectStore} store created.`)
+    console.log(`database ${objectFavoriteStore} store created.`)
   }
 
   onSetTitleIntoDB(title, cb) {
@@ -34,6 +35,16 @@ class IndexedDB {
     })
     cb({
       title: title
+    })
+  }
+
+  onSetFavoriteIntoDB(videoId, title, description) {
+    const db = this._getDB()
+    const transaction = db.transaction('favoriteCache', 'readwrite').objectStore('favoriteCache')
+    transaction.put({
+      videoId,
+      title,
+      description
     })
   }
 
