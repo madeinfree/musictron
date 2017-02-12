@@ -1,4 +1,4 @@
-const searchMusicLists = (params = { q: 'JASON MARZ' }) => {
+const searchVideosDetails = (params = { videoId: '' }) => {
   return (dispatch, getState) => {
     gapi.load('client', () => {
       gapi.client.init({
@@ -6,23 +6,19 @@ const searchMusicLists = (params = { q: 'JASON MARZ' }) => {
       }).then(() => {
         return gapi.client.request({
           method: 'GET',
-          path: '/youtube/v3/search',
+          path: 'youtube/v3/videos',
           params: {
-            part: 'snippet',
-            type: 'music',
-            q: params.q
+            part: 'contentDetails',
+            id: params.videoId
           }
         })
       }).then(res => {
-        dispatch({
-          type: 'SEARCHMUSICLISTS',
-          payload: res.result.items
-        })
+        // console.log(res)
       })
     })
   }
 }
 
 export {
-  searchMusicLists
+  searchVideosDetails
 }

@@ -38,13 +38,14 @@ class IndexedDB {
     })
   }
 
-  onSetFavoriteIntoDB(videoId, title, description) {
+  onSetFavoriteIntoDB(videoId, title, description, url) {
     const db = this._getDB()
     const transaction = db.transaction('favoriteCache', 'readwrite').objectStore('favoriteCache')
     transaction.put({
       videoId,
       title,
-      description
+      description,
+      url
     })
   }
 

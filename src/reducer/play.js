@@ -1,7 +1,7 @@
 const initialState = {
   videoId: '',
   playIndex: 0,
-  isPlayed: true,
+  isPlayed: false,
   detail: {
     title: '',
     description: ''
@@ -14,12 +14,14 @@ const play = (state = initialState, action) => {
       const {
         videoId,
         title,
-        description
+        description,
+        url
       } = action.payload
       return Object.assign({}, state, { videoId,
         detail: {
           title,
-          description
+          description,
+          url
         }
       })
     case 'RESTART_MUSIC':

@@ -10,8 +10,7 @@ import {
 
 const rightMain = {
   float: 'left',
-  width: '10%',
-  padding: 10
+  width: '10%'
 }
 
 const historyBtnStyle = {

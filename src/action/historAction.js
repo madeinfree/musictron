@@ -47,13 +47,14 @@ const getFavoriteCacheTitle = ({ db }) => {
   }
 }
 
-const addFavoriteVideoId = ({ title, description, videoId }) => {
+const addFavoriteVideoId = ({ title, description, videoId, url }) => {
   return {
     type: 'ADD_FAVORITE_VIDEO_ID',
     payload: {
       title,
       description,
-      videoId
+      videoId,
+      url
     }
   }
 }

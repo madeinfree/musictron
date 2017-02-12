@@ -8,15 +8,19 @@ import {
 } from '../../action/historAction'
 
 const leftMain = {
-  float: 'left',
-  width: '10%',
-  padding: 10
+  background: 'rgba(0, 0, 0, .1)',
+  color: '#fff',
+  height: '100%',
+  padding: 25
 }
 const leftTitleStyle = {
-  fontSize: 14
+  fontSize: 14,
+  marginBottom: 10
 }
 const favoriteBtnStyle = {
-  cursor: 'default'
+  cursor: 'default',
+  marginTop: 10,
+  marginBottom: 10,
 }
 
 class LeftContainer extends Component {
@@ -47,14 +51,14 @@ class LeftContainer extends Component {
                     onClick={ () => {
                       startMusic(video.videoId, {
                       title: video.title,
-                      description: video.description
+                      description: video.description,
+                      url: video.url
                     })
                   } }
                     style={ favoriteBtnStyle }
                     key={ `${video.videoId}-${idx}` }
                   >
                     { video.title.slice(0, 10) + '...' }
-                    <hr />
                   </div>
                 )
               })

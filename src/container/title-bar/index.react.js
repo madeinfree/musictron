@@ -11,7 +11,8 @@ import {
 const titleBarMain = {
   padding: 10,
   justifyContent: 'space-between',
-  display: 'flex'
+  display: 'flex',
+  borderBottom: '1px solid rgba(255, 255, 255, .1)'
 }
 const titleBarSearchAndUpgrade = {
   display: 'flex',

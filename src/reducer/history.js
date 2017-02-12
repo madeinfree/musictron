@@ -25,7 +25,9 @@ const history = (state = initialState, action) => {
       return Object.assign({}, state, {
         favoriteVideoIds: state.favoriteVideoIds.concat({
           title: action.payload.title,
-          videoId: action.payload.videoId
+          videoId: action.payload.videoId,
+          description: action.payload.description,
+          url: action.payload.url
         })
       })
     default:
