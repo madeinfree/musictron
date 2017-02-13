@@ -12,14 +12,14 @@ const searchVideosDetails = (params = { videoId: '' }) => {
             id: params.videoId
           }
         })
-      }).then(res => {
+      }, err => { throw new Error(err) }).then(res => {
         dispatch({
           type: 'FETCH_VIDEOS_DETAILS',
           payload: {
             items: res.result.items
           }
         })
-      })
+      }, err => { throw new Error(err) })
     })
   }
 }

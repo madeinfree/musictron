@@ -4,6 +4,9 @@ import {
   startMusic
 } from '../../action/playAction'
 import {
+  searchVideosDetails
+} from '../../action/detailAction'
+import {
   getFavoriteCacheTitle
 } from '../../action/historAction'
 
@@ -35,6 +38,7 @@ class LeftContainer extends Component {
     const {
       favoriteVideoIds,
       startMusic,
+      searchVideosDetails,
       db
     } = this.props
     return (
@@ -49,6 +53,7 @@ class LeftContainer extends Component {
                 return (
                   <div
                     onClick={ () => {
+                      searchVideosDetails({ videoId: video.videoId })
                       startMusic(video.videoId, {
                       title: video.title,
                       description: video.description,
@@ -78,7 +83,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   startMusic,
-  getFavoriteCacheTitle
+  getFavoriteCacheTitle,
+  searchVideosDetails
 }
 
 export default connect(
