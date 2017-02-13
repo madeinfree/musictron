@@ -36,11 +36,18 @@ class LeftContainer extends Component {
   }
   render() {
     const {
+      //state
+      playingVideoId,
       favoriteVideoIds,
+
+      // dispatch
       startMusic,
       searchVideosDetails,
+
+      //indexedDB
       db
     } = this.props
+
     return (
       <div
         style={ leftMain }
@@ -50,6 +57,7 @@ class LeftContainer extends Component {
           <div>
             {
               favoriteVideoIds.map((video, idx) => {
+                const isCurrentVideoId = playingVideoId === video.videoId
                 return (
                   <div
                     onClick={ () => {
@@ -60,7 +68,7 @@ class LeftContainer extends Component {
                       url: video.url
                     })
                   } }
-                    style={ favoriteBtnStyle }
+                    style={ isCurrentVideoId ? Object.assign({}, favoriteBtnStyle, { color: '#555' }) : favoriteBtnStyle }
                     key={ `${video.videoId}-${idx}` }
                   >
                     { video.title.slice(0, 10) + '...' }
@@ -77,7 +85,8 @@ class LeftContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    favoriteVideoIds: state.history.favoriteVideoIds
+    favoriteVideoIds: state.history.favoriteVideoIds,
+    playingVideoId: state.play.videoId
   }
 }
 

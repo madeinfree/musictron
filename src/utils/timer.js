@@ -1,9 +1,9 @@
-const reptms = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/
-let hours = 0,
-    minutes = 0,
-    seconds = 0
-
 const durationToSecond = (duration) => {
+  const reptms = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/
+  let hours = 0,
+      minutes = 0,
+      seconds = 0
+
   if (reptms.test(duration)) {
     var matches = reptms.exec(duration)
     if (matches[1]) hours = Number(matches[1])
