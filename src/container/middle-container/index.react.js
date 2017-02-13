@@ -278,7 +278,7 @@ class MiddleContainer extends Component {
                 if (!videoId) return
                 return (
                   <div
-                    key={ `${title}-idx` }
+                    key={ `${title}-${idx}` }
                     style={ middleListBodyRow }
                   >
                     <div
