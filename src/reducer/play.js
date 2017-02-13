@@ -1,6 +1,7 @@
 const initialState = {
   videoId: '',
   playIndex: 0,
+  currentTime: 0,
   isPlayed: false,
   detail: {
     title: '',
@@ -31,6 +32,10 @@ const play = (state = initialState, action) => {
     case 'STOP_MUSIC':
       return Object.assign({}, state, {
         isPlayed: false
+      })
+    case 'GET_CURRENT_TIME':
+      return Object.assign({}, state, {
+        currentTime: action.payload.currentTime
       })
     default:
       return state

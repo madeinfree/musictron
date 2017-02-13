@@ -1,4 +1,4 @@
-const searchMusicLists = (params = { q: 'JASON MARZ' }) => {
+const searchMusicLists = (params = { q: 'MAYDAY 五月天 派對動物' }) => {
   return (dispatch, getState) => {
     gapi.load('client', () => {
       gapi.client.init({

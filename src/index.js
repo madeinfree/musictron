@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import { lists } from './reducer/list'
 import { play } from './reducer/play'
 import { history } from './reducer/history'
+import { detail } from './reducer/detail'
 import thunk from 'redux-thunk';
 
 import APIWrapper from './container/gapi-container/index.react'
@@ -22,7 +23,8 @@ const store = createStore(
   combineReducers({
     lists,
     play,
-    history
+    history,
+    detail
   })
 , applyMiddleware(thunk))
 

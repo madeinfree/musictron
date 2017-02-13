@@ -13,7 +13,12 @@ const searchVideosDetails = (params = { videoId: '' }) => {
           }
         })
       }).then(res => {
-        // console.log(res)
+        dispatch({
+          type: 'FETCH_VIDEOS_DETAILS',
+          payload: {
+            items: res.result.items
+          }
+        })
       })
     })
   }

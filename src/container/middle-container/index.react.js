@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import {
   startMusic,
   stopMusic,
-  restartMusic
+  restartMusic,
+  getCurrentTime
 } from '../../action/playAction'
 import {
   addFavoriteVideoId
@@ -150,8 +151,13 @@ class MiddleContainer extends Component {
     this.timerForCurrentTimeMethod = setInterval(this.getCurrentTimeFromVideos.bind(this), 100)
   }
   getCurrentTimeFromVideos() {
+    const {
+      getCurrentTime
+    } = this.props
+
     this.lastCurrentTime = this.CurrentTime
     this.CurrentTime = this.player.getCurrentTime()
+    getCurrentTime(this.CurrentTime)
   }
 
   onStateChange(e) {
@@ -312,7 +318,8 @@ const mapDispatchToProps = {
   stopMusic,
   restartMusic,
   addFavoriteVideoId,
-  searchVideosDetails
+  searchVideosDetails,
+  getCurrentTime
 }
 export default connect(
   mapStateToProps,
