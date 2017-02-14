@@ -26,7 +26,7 @@ class FooterContainer extends Component {
       detail
     } = this.props
 
-    const currentTime = play.currentTime / detail.contentDetails.videoDuration * 100
+    const currentTime = (play.currentTime / detail.contentDetails.videoDuration * 100) || 0
     const currentTimeProgressCircle = Object.assign({}, progressBarCircleStyle, { left: currentTime * 7 })
 
     return (
