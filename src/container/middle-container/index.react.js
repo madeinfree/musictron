@@ -1,17 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  startMusic,
-  stopMusic,
-  restartMusic,
-  getCurrentTime
-} from '../../action/playAction'
-import {
-  addFavoriteVideoId
-} from '../../action/historAction'
-import {
-  searchVideosDetails
-} from '../../action/detailAction'
 
 const middleHr = {
   display: 'block',
@@ -88,108 +76,12 @@ class MiddleContainer extends Component {
 
   constructor(props) {
     super(props);
-
-    this.player = null
-    this.lastVideoId = ''
-    this.lastCurrentTime = 0
-    this.CurrentTime = 0
-
-    this.timerForCurrentTimeMethod = null
   }
 
   componentDidMount() {
-    const {
-      play
-    } = this.props
-    var tag = document.createElement('script');
-
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    window.onYouTubeIframeAPIReady = this.onReady.bind(this)
   }
 
   componentDidUpdate() {
-    const {
-      lists,
-      play
-    } = this.props
-
-    if (this.lastVideoId === play.videoId) return
-
-    this.lastVideoId = play.videoId
-    if (this.player && this.player.loadVideoById) {
-      this.player.loadVideoById(play.videoId, 0, "large")
-    }
-  }
-
-  onReady() {
-    const {
-      play
-    } = this.props
-    this.player = new YT.Player('player', {
-      height: '200',
-      width: '200',
-      playerVars: { 'autoplay': 0, 'controls': 0 },
-      videoId: play.videoId || 'uG3BGIq3-Cc',
-      events: {
-        'onReady': this.onPlayerReady.bind(this),
-        'onStateChange': this.onStateChange.bind(this)
-      }
-    });
-  }
-
-  onPlayerReady() {
-    const {
-      play
-    } = this.props
-    if (play.isPlayed) {
-      this.player.playVideo()
-    }
-
-    this.timerForCurrentTimeMethod = setInterval(this.getCurrentTimeFromVideos.bind(this), 100)
-  }
-  getCurrentTimeFromVideos() {
-    const {
-      getCurrentTime
-    } = this.props
-
-    this.lastCurrentTime = this.CurrentTime
-    this.CurrentTime = this.player.getCurrentTime()
-    getCurrentTime(this.CurrentTime)
-  }
-
-  onStateChange(e) {
-    const status = e.data
-    if (status === 0) {
-      this.onPlayerReady()
-    }
-    if (status === 1) {
-      if (this.timerForCurrentTimeMethod === null) {
-        this.timerForCurrentTimeMethod = setInterval(this.getCurrentTimeFromVideos.bind(this), 100)
-      }
-    }
-    if (status === 2) {
-      clearInterval(this.timerForCurrentTimeMethod)
-      this.timerForCurrentTimeMethod = null
-    }
-  }
-
-  onPlayMusic() {
-    const {
-      restartMusic
-    } = this.props
-    this.player.playVideo()
-    restartMusic()
-  }
-
-  onStopMusic() {
-    const {
-      stopMusic
-    } = this.props
-    this.player.pauseVideo()
-    stopMusic()
   }
 
   onAddFavoriteVideoId() {
@@ -238,12 +130,6 @@ class MiddleContainer extends Component {
           <div
             style={ middleBtnWrapper }
           >
-            {/* <div
-              style={ middleStartBtn }
-              onClick={ play.isPlayed ? this.onStopMusic.bind(this) : this.onPlayMusic.bind(this) }
-            >
-              { play.isPlayed ? '暫停' : '播放' }
-            </div> */}
             <div
               onClick={ this.onAddFavoriteVideoId.bind(this) }
               style={ middleFollowBtn }
@@ -313,15 +199,7 @@ const mapStateToProps = (state) => {
     play: state.play
   }
 }
-const mapDispatchToProps = {
-  startMusic,
-  stopMusic,
-  restartMusic,
-  addFavoriteVideoId,
-  searchVideosDetails,
-  getCurrentTime
-}
+
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(MiddleContainer)
