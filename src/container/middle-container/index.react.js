@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import {
+  startMusic
+} from '../../action/playAction'
+import {
+  searchVideosDetails
+} from '../../action/detailAction'
+
 const middleHr = {
   display: 'block',
   width: '100%',
@@ -118,7 +125,7 @@ class MiddleContainer extends Component {
       >
         <div
           style={ middleCover }>
-          <div id="player"></div>
+          <div style={ { display: 'none' } } id="player"></div>
           <div
             style={ middleCoverSongText }
           >
@@ -200,6 +207,12 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = {
+  startMusic,
+  searchVideosDetails
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(MiddleContainer)
