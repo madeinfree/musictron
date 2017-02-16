@@ -2,6 +2,10 @@
 
 Desktop music player with youtube. use Reactjs + Redux + Youtube API.
 
+## Screenshot
+
+![img](http://i.imgur.com/Xt1TlBc.png)
+
 ## Build
 
 ```command
