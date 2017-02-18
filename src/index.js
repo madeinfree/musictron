@@ -174,6 +174,20 @@ class Main extends Component {
     this.player.seekTo(seekSecond)
   }
 
+  onChangeVideoSeekFromControllbarCircle(second) {
+    const {
+      play,
+      detail,
+      getCurrentTime
+    } = this.props
+    const duration = detail.contentDetails.videoDuration
+    let seekSecond = parseInt(duration * second, 10)
+    if (seekSecond === 0) { seekSecond = 0 }
+    this.player.seekTo(seekSecond)
+
+    getCurrentTime(seekSecond)
+  }
+
   onChangeVideoColume (volume) {
     const {
       setVolume
@@ -208,6 +222,7 @@ class Main extends Component {
               onPlayMusic={ this.onPlayMusic.bind(this) }
               onChangeVideoSeek={ this.onChangeVideoSeek.bind(this) }
               onChangeVideoColume={ this.onChangeVideoColume.bind(this) }
+              onChangeVideoSeekFromControllbarCircle={ this.onChangeVideoSeekFromControllbarCircle.bind(this) }
             />
           </div>
         </APIWrapper>
@@ -219,7 +234,8 @@ class Main extends Component {
 const mapStateToProps = (state) => {
   return {
     lists: state.lists,
-    play: state.play
+    play: state.play,
+    detail: state.detail
   }
 }
 

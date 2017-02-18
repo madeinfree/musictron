@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { secondToHHMMSS } from '../../utils/timer'
 
 import ControllBar from '../../component/footer-component/controllbar.react'
+import ControllbarCircle from '../../component/footer-component/controllbarCircle.react'
 
 const flexStyle = {
   display: 'flex'
@@ -16,14 +17,6 @@ const footerMainStyle = {
   borderTop: '1px solid rgba(255, 255, 255, .1)'
 }
 
-const progressBarLineStyle = {
-  position: 'relative',
-  borderRadius: 5,
-  width: '100%',
-  height: 2,
-  backgroundColor: 'rgb(63, 125, 49)'
-}
-
 const progressBarCircleStyle = {
   position: 'absolute',
   top: -7,
@@ -33,7 +26,23 @@ const progressBarCircleStyle = {
   borderRadius: 50
 }
 
+const progressBarLineStyle = {
+  position: 'relative',
+  borderRadius: 5,
+  width: '100%',
+  height: 2,
+  backgroundColor: 'rgb(63, 125, 49)'
+}
+
 class FooterContainer extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      mouseIsTouch: false
+    }
+  }
+
   render() {
     const {
 
@@ -45,7 +54,8 @@ class FooterContainer extends Component {
       onStopMusic,
       onPlayMusic,
       onChangeVideoSeek,
-      onChangeVideoColume
+      onChangeVideoColume,
+      onChangeVideoSeekFromControllbarCircle
     } = this.props
 
     const currentTime = (play.currentTime / detail.contentDetails.videoDuration * 100) || 0
@@ -58,8 +68,15 @@ class FooterContainer extends Component {
       <div
         style={ footerMainStyle }
       >
-        <div ref={node => this.barLine = node} style={ progressBarLineStyle }>
-          <div style={ currentTimeProgressCircle }></div>
+        <div
+          ref={ node => this.barLine = node }
+          style={ progressBarLineStyle }
+        >
+          <ControllbarCircle
+            offsetWidth={ this.barLine ? this.barLine.offsetWidth : 0 }
+            style={ currentTimeProgressCircle }
+            onChangeVideoSeekFromControllbarCircle={ onChangeVideoSeekFromControllbarCircle }
+          />
         </div>
         <div style={ flexStyle }>
           <div style={ { backgroundColor: 'rgb(64, 64, 64)' } }>
@@ -70,6 +87,7 @@ class FooterContainer extends Component {
               <div>{ play.detail.title }</div>
             </div>
             <div style={ { display: 'flex', marginTop: 20, alignItems: 'center', justifyContent: 'space-between' } }>
+              <div style={ { marginLeft: 20, color: '#fff' } }>{ secondToHHMMSS(detail.contentDetails.videoDuration) } / { secondToHHMMSS(play.currentTime) }</div>
               <div>
                 <ControllBar
                   isPlayed={ play.isPlayed }
@@ -78,7 +96,6 @@ class FooterContainer extends Component {
                   onChangeVideoSeek={ onChangeVideoSeek }
                 />
               </div>
-              <div style={ { marginLeft: 10, color: '#fff' } }>{ secondToHHMMSS(detail.contentDetails.videoDuration) } / { secondToHHMMSS(play.currentTime) }</div>
               <input type='range' max='100' min='0' onChange={ (e) => onChangeVideoColume(e.target.value) } />
             </div>
           </div>

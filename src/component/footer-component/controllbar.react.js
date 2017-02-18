@@ -5,7 +5,8 @@ const controllbarMainStyle = {
   marginLeft: 20
 }
 
-const controllbarItemColor = {
+const controllbarItemStyle = {
+  fontSize: 20,
   color: '#fff'
 }
 
@@ -43,18 +44,18 @@ class ControllBar extends Component {
           type='backward'
           marginRight={ 20 }
           onHandleClick={ this.backwardVideoSeek.bind(this) }
-          style={ controllbarItemColor }
+          style={ controllbarItemStyle }
         />
         <ControllbarItem
           type={ isPlayed ? 'stop-circle' : 'play-circle'}
           onHandleClick={ isPlayed ? onStopMusic : onPlayMusic }
-          style={ controllbarItemColor }
+          style={ controllbarItemStyle }
         />
         <ControllbarItem
           type='forward'
           marginLeft={ 20 }
           onHandleClick={ this.forwardVideoSeek.bind(this) }
-          style={ controllbarItemColor }
+          style={ controllbarItemStyle }
         />
       </div>
     )
