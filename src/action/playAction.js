@@ -22,6 +22,15 @@ const restartMusic = () => {
   }
 }
 
+const setVolume = (volume) => {
+  return {
+    type: 'SET_VOLUME',
+    payload: {
+      volume
+    }
+  }
+}
+
 const getCurrentTime = (time) => {
   return {
     type: 'GET_CURRENT_TIME',
@@ -35,5 +44,6 @@ export {
   startMusic,
   stopMusic,
   restartMusic,
+  setVolume,
   getCurrentTime
 }

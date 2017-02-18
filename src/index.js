@@ -17,6 +17,7 @@ import {
   startMusic,
   stopMusic,
   restartMusic,
+  setVolume,
   getCurrentTime
 } from './action/playAction'
 import {
@@ -173,6 +174,15 @@ class Main extends Component {
     this.player.seekTo(seekSecond)
   }
 
+  onChangeVideoColume (volume) {
+    const {
+      setVolume
+    } = this.props
+
+    setVolume(volume)
+    this.player.setVolume(volume)
+  }
+
   render() {
 
     return (
@@ -197,6 +207,7 @@ class Main extends Component {
               onStopMusic={ this.onStopMusic.bind(this) }
               onPlayMusic={ this.onPlayMusic.bind(this) }
               onChangeVideoSeek={ this.onChangeVideoSeek.bind(this) }
+              onChangeVideoColume={ this.onChangeVideoColume.bind(this) }
             />
           </div>
         </APIWrapper>
@@ -216,6 +227,7 @@ const mapDispatchToProps = {
   startMusic,
   stopMusic,
   restartMusic,
+  setVolume,
   addFavoriteVideoId,
   searchVideosDetails,
   getCurrentTime

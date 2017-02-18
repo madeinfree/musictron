@@ -7,6 +7,9 @@ import {
 import {
   searchVideosDetails
 } from '../../action/detailAction'
+import {
+  addFavoriteVideoId
+} from '../../action/historAction'
 
 const middleHr = {
   display: 'block',
@@ -85,12 +88,6 @@ class MiddleContainer extends Component {
     super(props);
   }
 
-  componentDidMount() {
-  }
-
-  componentDidUpdate() {
-  }
-
   onAddFavoriteVideoId() {
     const {
       play,
@@ -125,7 +122,7 @@ class MiddleContainer extends Component {
       >
         <div
           style={ middleCover }>
-          <div style={ { display: 'none' } } id="player"></div>
+          <div id="player"></div>
           <div
             style={ middleCoverSongText }
           >

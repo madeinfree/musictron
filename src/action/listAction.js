@@ -9,7 +9,10 @@ const searchMusicLists = (params = { q: 'MAYDAY 五月天 派對動物' }) => {
           path: '/youtube/v3/search',
           params: {
             part: 'snippet',
-            type: 'music',
+            maxResults: 50,
+            type: 'video',
+            order: 'date',
+            videoDuration: 'short',
             q: params.q
           }
         })

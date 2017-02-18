@@ -1,20 +1,29 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  stopMusic
-} from '../../action/playAction'
 import { secondToHHMMSS } from '../../utils/timer'
 
 import ControllBar from '../../component/footer-component/controllbar.react'
 
+const flexStyle = {
+  display: 'flex'
+}
+
 const footerMainStyle = {
   position: 'fixed',
-  display: 'flex',
   bottom: 0,
   clear: 'both',
   width: '100%',
   borderTop: '1px solid rgba(255, 255, 255, .1)'
 }
+
+const progressBarLineStyle = {
+  position: 'relative',
+  borderRadius: 5,
+  width: '100%',
+  height: 2,
+  backgroundColor: 'rgb(63, 125, 49)'
+}
+
 const progressBarCircleStyle = {
   position: 'absolute',
   top: -7,
@@ -35,36 +44,43 @@ class FooterContainer extends Component {
       // handle to stop music
       onStopMusic,
       onPlayMusic,
-      onChangeVideoSeek
+      onChangeVideoSeek,
+      onChangeVideoColume
     } = this.props
 
     const currentTime = (play.currentTime / detail.contentDetails.videoDuration * 100) || 0
-    const currentTimeProgressCircle = Object.assign({}, progressBarCircleStyle, { left: currentTime * 7 })
+    let currentTimeProgressCircle = {}
+    if (this.barLine) {
+      currentTimeProgressCircle = Object.assign({}, progressBarCircleStyle, { left: (currentTime / 100) * this.barLine.offsetWidth })
+    }
 
     return (
       <div
         style={ footerMainStyle }
       >
-        <div style={ { backgroundColor: 'rgb(64, 64, 64)' } }>
-          <img style={ { transform: 'scale(0.7)' } } height='100%' src={ play.detail.url } />
+        <div ref={node => this.barLine = node} style={ progressBarLineStyle }>
+          <div style={ currentTimeProgressCircle }></div>
         </div>
-        <div style={ { padding: 12, backgroundColor: 'rgb(64, 64, 64)', width :'100%' } }>
-          <div style={ { fontSize: 12, marginLeft: 20, color: '#fff', fontWeight: 900, letterSpacing: 5 } }>
-            <div>{ play.detail.title }</div>
+        <div style={ flexStyle }>
+          <div style={ { backgroundColor: 'rgb(64, 64, 64)' } }>
+            <img style={ { transform: 'scale(0.7)' } } height='100%' src={ play.detail.url } />
           </div>
-          <div style={ { display: 'flex', marginTop: 20, alignItems: 'center' } }>
-            <div>
-              <ControllBar
-                isPlayed={ play.isPlayed }
-                onStopMusic={ onStopMusic }
-                onPlayMusic={ onPlayMusic }
-                onChangeVideoSeek={ onChangeVideoSeek }
-              />
+          <div style={ { padding: 12, backgroundColor: 'rgb(64, 64, 64)', width :'100%' } }>
+            <div style={ { fontSize: 12, marginLeft: 20, color: '#fff', fontWeight: 300 } }>
+              <div>{ play.detail.title }</div>
             </div>
-            <div style={ { position: 'relative', borderRadius: 5, width: 700, height: 2, backgroundColor: 'rgb(63, 125, 49)', marginLeft: 20 } }>
-              <div style={ currentTimeProgressCircle }></div>
+            <div style={ { display: 'flex', marginTop: 20, alignItems: 'center', justifyContent: 'space-between' } }>
+              <div>
+                <ControllBar
+                  isPlayed={ play.isPlayed }
+                  onStopMusic={ onStopMusic }
+                  onPlayMusic={ onPlayMusic }
+                  onChangeVideoSeek={ onChangeVideoSeek }
+                />
+              </div>
+              <div style={ { marginLeft: 10, color: '#fff' } }>{ secondToHHMMSS(detail.contentDetails.videoDuration) } / { secondToHHMMSS(play.currentTime) }</div>
+              <input type='range' max='100' min='0' onChange={ (e) => onChangeVideoColume(e.target.value) } />
             </div>
-            <div style={ { marginLeft: 10, color: '#fff' } }>{ secondToHHMMSS(detail.contentDetails.videoDuration) } / { secondToHHMMSS(play.currentTime) }</div>
           </div>
         </div>
       </div>
@@ -79,11 +95,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {
-  stopMusic
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(FooterContainer)
